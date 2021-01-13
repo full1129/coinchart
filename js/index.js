@@ -296,19 +296,9 @@
             topButtonContainerElement.setAttribute("class", "box-button-container");
 
             //Open in Coinigy button
-            let btnEl = document.createElement("a");
-            btnEl.innerHTML = "<img src='multicoincharts/images/coinigy.png' class='"+ usesmallbutton2 + "'/>";
-            btnEl.setAttribute("href", "javascript:void(0)");
-            btnEl.setAttribute("title", "Open in Coinigy");
-            btnEl.setAttribute("data-balloon-length", "small");
-            btnEl.setAttribute("data-balloon", "Open in Coinigy");
-            btnEl.setAttribute("data-balloon-pos", "left");
-            btnEl.addEventListener("click", openCoinigy.bind(null,chartTicker));
-
-            topButtonContainerElement.appendChild(btnEl);
-
+            
             //Show in Fullscreen button
-            btnEl = document.createElement("a");
+            let btnEl = document.createElement("a");
             btnEl.setAttribute("class", usesmallbutton);
             btnEl.setAttribute("href", "javascript:void(0)");
             btnEl.setAttribute("title", "Show in Fullscreen");
