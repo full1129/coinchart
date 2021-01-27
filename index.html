@@ -66,12 +66,16 @@
 	<LINK href="css/baloon.css" rel="stylesheet">
 
 	<!-- <SCRIPT src="https://use.fontawesome.com/a4e3744178.js"></SCRIPT> -->
+	<script type="text/javascript" src="js/Chart.min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+
 	<SCRIPT type="text/javascript" src="https://s3.tradingview.com/tv.js"></SCRIPT>
 	<SCRIPT type="text/javascript" src="js/cryptocurrencies.js"></SCRIPT>
 	<SCRIPT type="text/javascript" src="js/headstart.js?v3"></SCRIPT>
 	<SCRIPT type="text/javascript" src="js/coinigyexchanges.js"></SCRIPT>
 	<SCRIPT type="text/javascript" src="js/cryptocoins.js"></SCRIPT>
 	<SCRIPT type="text/javascript" src="js/index.js?v2.6"></SCRIPT>
+	<script type="text/javascript" src="js/custom.js"></script>
 </HEAD>
 
 <BODY style="background: #363843;">
@@ -298,7 +302,9 @@
 			</DIV>
 			<DIV id="charts"></DIV>
 		</DIV>
-
+		<div class="trading-activity">
+			<canvas id="myChart" width="" height=""></canvas>
+		</div>
 		<DIV class="modalAd">
 			<DIV>
 				<DIV style="border-radius: 5px; background-color:white; border: 4px dashed black;
@@ -311,9 +317,10 @@
 	     <DIV style="text-align: center; cursor:pointer;"
 					<button class="closeBtn" onclick="showAd()">Close</button>
 				</DIV>
-			<SCRIPT type="text/javascript">
-				initPage();
-			</SCRIPT>
+		
+		<SCRIPT type="text/javascript">
+			initPage();
+		</SCRIPT>
 </BODY>
 
 </HTML>

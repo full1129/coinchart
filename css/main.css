@@ -506,3 +506,11 @@
 		color: #da513d;
 	
 }
+
+#myChart {
+	width: calc(100%);
+	height: calc(100%);
+}
+.trading-activity {
+	height: calc(50% - 15px);
+}
