@@ -1,8 +1,18 @@
 $(document).ready(function() {
   var ctx = document.getElementById("myChart").getContext("2d");
+  var trading_activity = $('#trading-value').val();
+  
+  function cal_time(x) {
+    var today = new Date();
+   cal_hour = new Date(today.valueOf() + (x *1000));
+   res_hour = cal_hour.getHours() + ":" + cal_hour.getMinutes() + ":" + cal_hour.getSeconds();
+   return res_hour;
+  }
+  
+  // var current_time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
   var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: [cal_time(-12).toString(), cal_time(-10).toString(), cal_time(-8).toString(), cal_time(-6).toString(), cal_time(-4).toString(), cal_time(-2).toString(), cal_time(0).toString()],
     datasets: [ {
       label: "My Second dataset",
       fillColor: "rgba(151,187,205,0.2)",
@@ -27,36 +37,37 @@ $(document).ready(function() {
     scaleStartValue: 0
   };
 
-  var myLineChart = new Chart(ctx).Line(data, options);
+  runChart(data, options);
 
   setInterval(function() {
     setData(data.datasets[0].data);
 
     setLabels(data.labels);
 
-    var myLineChart = new Chart(ctx).Line(data, options);
+    runChart(data, options);
   }, 2000);
 
+ function runChart(data, options){
+  var myLineChart = new Chart(ctx).Line(data, options);
+ }
+
   function setLabels(labels) {
-    var nextMonthIndex = months.indexOf(labels[labels.length - 1]) + 1;
-    var nextMonthName = months[nextMonthIndex] != undefined ? months[nextMonthIndex] : "January";
-    labels.push(nextMonthName);
+    var k = 0;
+    labels.push(cal_time(k).toString());
+    k = k+2;
     labels.shift();
   }
 
   function setData(data) {
-    data.push(10);
-    data.shift();
+    $.ajax({
+      url:"/data",
+      success:function(res) {
+        data.push(res);
+        data.shift();
+      }
+    });    
   }
-  
-  function convertMonthNameToNumber(monthName) {
-    var myDate = new Date(monthName + " 1, 2016");
-    var monthDigit = myDate.getMonth();
-    return isNaN(monthDigit) ? 0 : (monthDigit + 1);
-  }
-  
-  var months = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
+
 
 });
+

@@ -14,7 +14,19 @@ import selenium.webdriver
 import webbrowser
 import time
 from datetime import datetime
+import random
 
+from flask import Flask
+from flask import render_template
+from flask import request
+from flask import session
+from flask import redirect # I will learn after that will use
+from flask import url_for  # I will learn after that will use
+from flask import flash    # I will learn after that will use
+
+import os
+import json
+import pdb
 
 option = webdriver.ChromeOptions()
 option.add_argument('headless')
@@ -23,13 +35,9 @@ today = date.today()
 current_time = today.strftime("%m%d%y")
 print(current_time)
 
-
-
-
-
 # file_name = input("Enter the excel file name: ")
-# driver = webdriver.Chrome('chromedriver', options = option)
-driver = selenium.webdriver.Chrome()
+driver = webdriver.Chrome('chromedriver', options = option)
+# driver = selenium.webdriver.Chrome()
 
 Email = "tran200989@gmail.com"
 Password = "ngocthuy1989"
@@ -62,13 +70,27 @@ code_input.send_keys(phone_code)
 verify_button = driver.find_element_by_xpath('//input[@id="step_two_verify"]')
 verify_button.click()
 
+def scrapy():
+	driver.get('https://www.coinbase.com/price/bitcoin')
+	trading_activity = []
+	trading_text = driver.find_element_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2 nlylV"]')
+	trading_text = trading_text.text
+	trading_value = trading_text.split("%")[0]
+	# trading_value = random.random()*10
+	file = open("myFile.txt","a+")
+	file.write(str(trading_value) + "\n")
+	file.close()
+	return str(trading_value)
 
-driver.get('https://www.coinbase.com/price/bitcoin')
+app = Flask(__name__)
+@app.route("/")
+def trading():
+	return render_template('index.html',data = scrapy())
 
-trading_value = driver.find_element_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2 nlylV"]')
-trading_value = trading_value.text
-print(trading_value)
-# 62% buy
-webbrowser.open_new_tab('index.html')
+@app.route("/data")
+def trading_data():
+	return scrapy()
+if __name__ == '__main__':
+	app.run(debug = True)
 
 print('Done')
