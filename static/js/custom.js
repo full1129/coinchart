@@ -4,7 +4,7 @@ $(document).ready(function() {
   
   function cal_time(x) {
     var today = new Date();
-   cal_hour = new Date(today.valueOf() + (x *1000));
+   cal_hour = new Date(today.valueOf() + (x *3600000));
    res_hour = cal_hour.getHours() + ":" + cal_hour.getMinutes() + ":" + cal_hour.getSeconds();
    return res_hour;
   }
@@ -21,7 +21,7 @@ $(document).ready(function() {
       pointStrokeColor: "#fff",
       pointHighlightFill: "#fff",
       pointHighlightStroke: "rgba(151,187,205,1)",
-      data: [0,0,0,0,0,0,0]
+      data: [0,0,0,0,0,0,trading_activity]
     }]
   };
   var options = {
@@ -45,7 +45,7 @@ $(document).ready(function() {
     setLabels(data.labels);
 
     runChart(data, options);
-  }, 2000);
+  }, 7200000);
 
  function runChart(data, options){
   var myLineChart = new Chart(ctx).Line(data, options);
