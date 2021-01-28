@@ -36,8 +36,8 @@ current_time = today.strftime("%m%d%y")
 print(current_time)
 
 # file_name = input("Enter the excel file name: ")
-driver = webdriver.Chrome('chromedriver', options = option)
-# driver = selenium.webdriver.Chrome()
+# driver = webdriver.Chrome('chromedriver', options = option)
+driver = selenium.webdriver.Chrome()
 
 Email = "tran200989@gmail.com"
 Password = "ngocthuy1989"
