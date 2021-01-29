@@ -72,7 +72,7 @@ verify_button.click()
 
 def scrapy(url):
 	driver.get('https://www.coinbase.com/price/'+url)
-	buy_texts = driver.find_elements_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2"]')
+	buy_texts = driver.find_elements_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2')
 	print(buy_texts)
 	buy_text = buy_texts[0].text
 	buy_value = buy_text.split("%")[0]
