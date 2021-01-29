@@ -59,10 +59,10 @@ time.sleep(1)
 submit_button=driver.find_element_by_xpath('//input[@type="submit"]')
 submit_button.click()
 
-time.sleep(35)
+
 
 phone_code = input("Enter the phone code: ")
-
+time.sleep(35)
 code_input = driver.find_element_by_xpath('//input[@class="focus"]')
 code_input.send_keys(phone_code)
 
@@ -74,8 +74,8 @@ def scrapy(url):
 	trading_activity = []
 	buy_text = driver.find_elements_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2"]')
 
-	buy_text = buy_text[0].text
-	buy_value = buy_text.split("%")[0]
+	buy_txt = buy_text[0].text
+	buy_value = buy_txt.split("%")[0]
 	# buy_value = 10
 	file = open(url+".txt","a+")
 	file.write(str(buy_value) + "\n")
