@@ -92,6 +92,20 @@
 		</DIV>
 		<BUTTON id="theme-toggle" class="theme" onclick="change_theme()">Browser Incompatible</BUTTON>
 		<BUTTON id="configChart" class="theme" onclick="showMultiConfig()">Javascript Crashed</BUTTON>
+		<select id="trading-config">
+			<option value="0">Bitcoin</option>
+			<option value="1">Ethereum</option>
+			<option value="2">Chainlink</option>
+			<option value="3">Litecoin</option>
+			<option value="4">Bitcoin-Cash</option>
+			<option value="5">Stellar</option>
+			<option value="6">Usdc</option>
+			<option value="7">Uniswap</option>
+			<option value="8">Wrapped-Bitcoin</option>
+			<option value="9">Aave</option>
+			<option value="10">Eos</option>
+			<option value="11">Tezos</option>
+		</select>
 		<DIV class="modalConfig" style="-webkit-backdrop-filter: blur(6px);">
 			<DIV class="hero" style="overflow-y: auto; max-height: 100vh;">
 				<DIV id="addMultiChart" style="background: #fff9fc; border-radius: 2px;" class="cornflower-box">
@@ -259,38 +273,7 @@
 				<DIV>
 					<button class="closeBtn" onclick="showInfo()">Close</button>
 
-					<!-- <section id="content3">
-						<H1>leasj </H1>
-						<H6>
-							<a href="https://github.com/JosiahLeas/josiahleas.github.io" target="_blank" style="margin: 0; padding: 0;">Github/JosiahLeas</A>
-						</H6>
-						<BR>
-						<H1>P-Medicado </H1>
-						<H6>
-							<a href="https://github.com/P-Medicado" target="_blank" style="margin: 0; padding: 0;">Github/P-Medicado</A>
-						</H6>
-						<BR>
-						<H1>WhiteRavenTechnology </H1>
-						<H6>
-							<a href="https://github.com/WhiteRavenTechnology" target="_blank" style="margin: 0; padding: 0;">Github/WhiteRavenTechnology</A>
-						</H6>
-						<BR>
-						<H1>shellstrom </H1>
-						<H6>
-							<a href="https://github.com/shellstrom" target="_blank" style="margin: 0; padding: 0;">Github/shellstrom</A>
-						</H6>
-						<BR>
-						<H1>qwerty </H1>
-						<H6>
-							<a href="https://github.com/qwerty1891" target="_blank" style="margin: 0; padding: 0;">Github/qwerty1891</A>
-						</H6>
-						<BR>
-						<H1>forever.scg </H1>
-						<H6>
-							<a href="http://prettysights.com/" target="_blank" style="margin: 0; padding: 0;">http://PrettySights.com/</A>
-						</H6>
-						<BR>
-					</section> -->
+
 				</DIV>
 			</DIV>
     </DIV>
@@ -303,8 +286,30 @@
 			<DIV id="charts"></DIV>
 		</DIV>
 		<div class="trading-activity">
-			<input type="text" id="trading-value" hidden name="" value="{{data}}">
-			<canvas id="myChart" width="" height=""></canvas>
+			<input type="text" class="coin_init" id="bitcoin-value" hidden name="" value="{{data[0]}}">
+			<input type="text" class="coin_init" id="ethereum-value" hidden name="" value="{{data[1]}}">
+			<input type="text" class="coin_init" id="chainlink-value" hidden name="" value="{{data[2]}}">
+			<input type="text" class="coin_init" id="litecoin-value" hidden name="" value="{{data[3]}}">
+			<input type="text" class="coin_init" id="bitcoin_cash-value" hidden name="" value="{{data[4]}}">
+			<input type="text" class="coin_init" id="stellar-value" hidden name="" value="{{data[5]}}">
+			<input type="text" class="coin_init" id="usdc-value" hidden name="" value="{{data[6]}}">
+			<input type="text" class="coin_init" id="uniswap-value" hidden name="" value="{{data[7]}}">
+			<input type="text" class="coin_init" id="wrapped_bitcoin-value" hidden name="" value="{{data[8]}}">
+			<input type="text" class="coin_init" id="aave-value" hidden name="" value="{{data[9]}}">
+			<input type="text" class="coin_init" id="eos-value" hidden name="" value="{{data[10]}}">
+			<input type="text" class="coin_init" id="tezos-value" hidden name="" value="{{data[11]}}">
+			<canvas id="bitcoin-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="ethereum-chart" class="activity-chart"  width="" height=""></canvas>
+			<canvas id="chainlink-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="litecoin-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="bitcoin_cash-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="stellar-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="usdc-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="uniswap-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="wrapped_bitcoin-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="aave-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="eos-chart" class="activity-chart" width="" height=""></canvas>
+			<canvas id="tezos-chart" class="activity-chart" width="" height=""></canvas>
 		</div>
 		<DIV class="modalAd">
 			<DIV>

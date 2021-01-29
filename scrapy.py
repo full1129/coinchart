@@ -15,6 +15,7 @@ import webbrowser
 import time
 from datetime import datetime
 import random
+from flask import jsonify
 
 from flask import Flask
 from flask import render_template
@@ -24,8 +25,6 @@ from flask import redirect # I will learn after that will use
 from flask import url_for  # I will learn after that will use
 from flask import flash    # I will learn after that will use
 
-import os
-import json
 import pdb
 
 option = webdriver.ChromeOptions()
@@ -45,7 +44,7 @@ Password = "ngocthuy1989"
 base_url = 'https://www.coinbase.com/signin'
 
 driver.get(base_url)
-time.sleep(5)
+time.sleep(35)
 driver.implicitly_wait(5)
 
 # pytesseract.pytesseract.tesseract_cmd = r'C:/Users/Secret Agent/AppData/Local/Tesseract-OCR/tesseract.exe'
@@ -70,26 +69,39 @@ code_input.send_keys(phone_code)
 verify_button = driver.find_element_by_xpath('//input[@id="step_two_verify"]')
 verify_button.click()
 
-def scrapy():
-	driver.get('https://www.coinbase.com/price/bitcoin')
+def scrapy(url):
+	driver.get('https://www.coinbase.com/price/'+url)
 	trading_activity = []
-	trading_text = driver.find_element_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2 nlylV"]')
-	trading_text = trading_text.text
-	trading_value = trading_text.split("%")[0]
-	# trading_value = random.random()*10
-	file = open("myFile.txt","a+")
-	file.write(str(trading_value) + "\n")
+	buy_text = driver.find_element_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2 nlylV"]')
+	buy_text = buy_text.text
+	buy_value = buy_text.split("%")[0]
+	# buy_value = 10
+	file = open(url+".txt","a+")
+	file.write(str(buy_value) + "\n")
 	file.close()
-	return str(trading_value)
+	return str(buy_value)
 
+
+
+coins = ["bitcoin" , "ethereum" ,"chainlink" , "litecoin" , "bitcoin-cash" , "stellar" , "usdc" , "uniswap" , "wrapped-bitcoin" , "aave" , "eos" , "tezos"]
+
+activity_data = []
 app = Flask(__name__)
 @app.route("/")
 def trading():
-	return render_template('index.html',data = scrapy())
+	coins_lenght = len(coins)
+	for x in coins:
+		activity_data.append(scrapy(x))
+	return render_template('index.html',data = activity_data)
 
-@app.route("/data")
-def trading_data():
-	return scrapy()
+@app.route("/activity")
+def trading_bitcoin():
+	activity_data = []
+	for x in coins:
+		activity_data.append(scrapy(x))
+	return jsonify(activity_data)
+
+
 if __name__ == '__main__':
 	app.run(debug = True)
 

@@ -507,10 +507,19 @@
 	
 }
 
-#myChart {
+.activity-chart {
 	width: calc(100%);
-	height: calc(100%);
+	height: calc(45%);
+	opacity: 0;
+	z-index: 0;
+	position: absolute;
+	top: 25px;
 }
 .trading-activity {
 	height: calc(50% - 15px);
+}
+
+
+#bitcoin-chart {
+	opacity: 1;
 }
