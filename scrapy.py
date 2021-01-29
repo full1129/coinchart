@@ -44,7 +44,7 @@ Password = "ngocthuy1989"
 base_url = 'https://www.coinbase.com/signin'
 
 driver.get(base_url)
-time.sleep(35)
+time.sleep(5)
 driver.implicitly_wait(5)
 
 # pytesseract.pytesseract.tesseract_cmd = r'C:/Users/Secret Agent/AppData/Local/Tesseract-OCR/tesseract.exe'
@@ -59,7 +59,7 @@ time.sleep(1)
 submit_button=driver.find_element_by_xpath('//input[@type="submit"]')
 submit_button.click()
 
-time.sleep(5)
+time.sleep(35)
 
 phone_code = input("Enter the phone code: ")
 
@@ -72,8 +72,9 @@ verify_button.click()
 def scrapy(url):
 	driver.get('https://www.coinbase.com/price/'+url)
 	trading_activity = []
-	buy_text = driver.find_element_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2 nlylV"]')
-	buy_text = buy_text.text
+	buy_text = driver.find_elements_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2"]')
+
+	buy_text = buy_text[0].text
 	buy_value = buy_text.split("%")[0]
 	# buy_value = 10
 	file = open(url+".txt","a+")
