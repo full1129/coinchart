@@ -75,6 +75,7 @@ def scrapy(url):
 	buy_texts = driver.find_elements_by_xpath('//div[@class="PercentBarBuying__Text-pn1f5a-2"]')
 	for buy_text in buy_texts:
 		buy_txt.append(buy_text.text)
+	print(buy_txt)
 	buy_value = buy_txt[0].split("%")[0]
 	# buy_value = 10
 	file = open(url+".txt","a+")
