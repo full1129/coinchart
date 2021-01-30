@@ -26,7 +26,7 @@ $(document).ready(function() {
     for (var i = 0; i < coin_init_length; i++) {      
       coin_init.push($($('.coin_init')[i]).val());
       chart_data[i] = {
-        labels: [cal_time(-12).toString(), cal_time(-10).toString(), cal_time(-8).toString(), cal_time(-6).toString(), cal_time(-4).toString(), cal_time(-2).toString(), cal_time(0).toString()],
+        labels: [cal_time(-6).toString(), cal_time(-5).toString(), cal_time(-4).toString(), cal_time(-3).toString(), cal_time(-2).toString(), cal_time(-1).toString(), cal_time(0).toString()],
         datasets: [ {
           label: "My Second dataset",
           fillColor: "rgba(151,187,205,0.2)",
@@ -47,16 +47,18 @@ $(document).ready(function() {
 
   setInterval(function() {
     tradingchart();
-  }, 7200000);
+  }, 1800000);
 
   $('#trading-config').change(function() {
      var index = parseInt($('#trading-config').val());
      for (var i = 0; i < coin_init_length; i++) {
        if (i === index) {
-          $($(".activity-chart")[i]).css('z-index',1);  
+          $($(".activity-chart")[i]).css('z-index',1);
+          $($(".activity-chart")[i]).css('opacity',1);
        }
        else {
          $($(".activity-chart")[i]).css('z-index',0);
+         $($(".activity-chart")[i]).css('opacity',0);
        }
      }
      
@@ -76,7 +78,7 @@ $(document).ready(function() {
   var k = 0;
   function setLabels(labels, j) {
     if (j === 0) {
-      k = k+2;  
+      k++;  
     }    
     labels.push(cal_time(k).toString());    
     labels.shift();

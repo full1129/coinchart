@@ -104,7 +104,7 @@ def trading_bitcoin():
 	for x in coins:
 		activity_data.append(scrapy(x))
 	return jsonify(activity_data)
-
+	time.sleep(25)
 
 if __name__ == '__main__':
 	app.run(debug = False)
