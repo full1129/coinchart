@@ -57,7 +57,8 @@ password_input.send_keys(Password)
 print("--------Please insert key manually--------------")
 time.sleep(1)
 submit_button=driver.find_element_by_xpath('//input[@type="submit"]')
-submit_button.click()
+driver.execute_script("arguments[0].click();", submit_button)
+# submit_button.click()
 
 time.sleep(10)
 
@@ -68,13 +69,14 @@ code_input = driver.find_element_by_xpath('//input[@class="focus"]')
 code_input.send_keys(phone_code)
 
 verify_button = driver.find_element_by_xpath('//input[@id="step_two_verify"]')
-verify_button.click()
+driver.execute_script("arguments[0].click();", verify_button)
+# verify_button.click()
 
 def scrapy(url):
-	time.sleep(1)
+	time.sleep(3)
 	driver.get('https://www.coinbase.com/price/'+url)
-	time.sleep(1)
-	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('text')
+	time.sleep(3)
+	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
 
 	print(buy_text)
 	buy_value = buy_text.split("%")[0]
