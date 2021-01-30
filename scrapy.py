@@ -58,7 +58,6 @@ print("--------Please insert key manually--------------")
 time.sleep(1)
 submit_button=driver.find_element_by_xpath('//input[@type="submit"]')
 driver.execute_script("arguments[0].click();", submit_button)
-# submit_button.click()
 
 time.sleep(10)
 
@@ -70,7 +69,6 @@ code_input.send_keys(phone_code)
 
 verify_button = driver.find_element_by_xpath('//input[@id="step_two_verify"]')
 driver.execute_script("arguments[0].click();", verify_button)
-# verify_button.click()
 
 def scrapy(url):
 	time.sleep(3)
@@ -88,7 +86,7 @@ def scrapy(url):
 
 
 
-coins = ["bitcoin" , "ethereum" ,"chainlink" , "litecoin" , "bitcoin-cash" , "stellar" , "usdc" , "uniswap" , "wrapped-bitcoin" , "aave" , "eos" , "tezos"]
+coins = ["bitcoin" , "ethereum" ,"chainlink" , "litecoin" , "bitcoin-cash" , "uniswap" , "wrapped-bitcoin" , "aave" , "eos" , "tezos"]
 
 activity_data = []
 app = Flask(__name__)
@@ -108,6 +106,6 @@ def trading_bitcoin():
 
 
 if __name__ == '__main__':
-	app.run(debug = True)
+	app.run(debug = False)
 
 print('Done')
