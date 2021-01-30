@@ -91,19 +91,18 @@ $(document).ready(function() {
   }
 
   function tradingchart() {
-    setInterval(function(){
-      $.ajax({
-        url:"/activity",
-        success:function(res) {
-
+    $.ajax({
+      url:"/activity",
+      success:function(res) {
+        setTimeout(function(){
           for (var j = 0; j < coin_init_length; j++) {
             setData(chart_data[j].datasets[0].data,res[j]);
             setLabels(chart_data[j].labels, j);
             runChart(chart_data[j], options, j);
-          }      
-        }
-      });
-    },3000);
+          }   
+        },3000);             
+      }
+    });
   }  
 
 });
