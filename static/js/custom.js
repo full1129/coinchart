@@ -53,10 +53,10 @@ $(document).ready(function() {
      var index = parseInt($('#trading-config').val());
      for (var i = 0; i < coin_init_length; i++) {
        if (i === index) {
-          $($(".activity-chart")[i]).css('opacity',1);  
+          $($(".activity-chart")[i]).css('z-index',1);  
        }
        else {
-         $($(".activity-chart")[i]).css('opacity',0);
+         $($(".activity-chart")[i]).css('z-index',0);
        }
      }
      
@@ -94,13 +94,13 @@ $(document).ready(function() {
     $.ajax({
       url:"/activity",
       success:function(res) {
-        setTimeout(function(){
+
           for (var j = 0; j < coin_init_length; j++) {
             setData(chart_data[j].datasets[0].data,res[j]);
             setLabels(chart_data[j].labels, j);
             runChart(chart_data[j], options, j);
           }   
-        },3000);             
+           
       }
     });
   }  

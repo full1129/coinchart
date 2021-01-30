@@ -510,7 +510,6 @@
 .activity-chart {
 	width: calc(100%);
 	height: calc(45%);
-	opacity: 0;
 	z-index: 0;
 	position: absolute;
 	top: 25px;
@@ -521,5 +520,5 @@
 
 
 #bitcoin-chart {
-	opacity: 1;
+	z-index: : 1;
 }

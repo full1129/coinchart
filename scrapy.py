@@ -72,15 +72,16 @@ driver.execute_script("arguments[0].click();", verify_button)
 
 def scrapy(url):
 	time.sleep(3)
+	now = datetime.now()
+	current_time = now.strftime("%H:%M:%S")
 	driver.get('https://www.coinbase.com/price/'+url)
-	time.sleep(3)
 	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
 
 	print(buy_text)
 	buy_value = buy_text.split("%")[0]
 	# buy_value = 10
-	file = open(url+".txt","a+")
-	file.write(str(buy_value) + "\n")
+	file = open("data/"+url+".txt","a+")
+	file.write(current_time + " --> " + str(buy_value) + "\n")
 	file.close()
 	return str(buy_value)
 
