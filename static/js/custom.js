@@ -47,7 +47,7 @@ $(document).ready(function() {
 
   setInterval(function() {
     tradingchart();
-  }, 4000);
+  }, 10000);
 
   $('#trading-config').change(function() {
      var index = parseInt($('#trading-config').val());
