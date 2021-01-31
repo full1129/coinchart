@@ -1,32 +1,31 @@
 $(document).ready(function() {
   coins_chart = [];
-  
-  var bitcoin_init = parseFloat($('#bitcoin-value').val());
-  var ethereum_init = parseFloat($('#ethereum-value').val());
   var coin_init_length = $('.coin_init').length;
   for (var i = 0; i < coin_init_length; i++) {
     coins_chart.push(document.getElementsByClassName("activity-chart")[i].getContext("2d"));
   }
   var coin_init = [];
+  var time_init = [];
   var chart_data = []; 
   var options = {
-        animation: false,
-        //Boolean - If we want to override with a hard coded scale
-        scaleOverride: false,
-        //** Required if scaleOverride is true **
-        //Number - The number of steps in a hard coded scale
-        scaleSteps: 10,
-        //Number - The value jump in the hard coded scale
-        scaleStepWidth: 30,
-        //Number - The scale starting value
-        scaleStartValue: 0
+    animation: false,
+    //Boolean - If we want to override with a hard coded scale
+    scaleOverride: false,
+    //** Required if scaleOverride is true **
+    //Number - The number of steps in a hard coded scale
+    scaleSteps: 10,
+    //Number - The value jump in the hard coded scale
+    scaleStepWidth: 30,
+    //Number - The scale starting value
+    scaleStartValue: 0
   }; 
   function init(){    
     
     for (var i = 0; i < coin_init_length; i++) {      
       coin_init.push($($('.coin_init')[i]).val());
+
       chart_data[i] = {
-        labels: [cal_time(-6).toString(), cal_time(-5).toString(), cal_time(-4).toString(), cal_time(-3).toString(), cal_time(-2).toString(), cal_time(-1).toString(), cal_time(0).toString()],
+        labels: [cal_time(-19).toString(), cal_time(-18).toString(), cal_time(-17).toString(), cal_time(-16).toString(), cal_time(-15).toString(), cal_time(-14).toString(), cal_time(-13).toString(), cal_time(-12).toString(), cal_time(-11).toString(), cal_time(-10).toString(), cal_time(-9).toString(), cal_time(-8).toString(), cal_time(-7).toString(), cal_time(-6).toString(), cal_time(-5).toString(), cal_time(-4).toString(), cal_time(-3).toString(), cal_time(-2).toString(), cal_time(-1).toString(), cal_time(0).toString()],
         datasets: [ {
           label: "My Second dataset",
           fillColor: "rgba(151,187,205,0.2)",
@@ -35,7 +34,7 @@ $(document).ready(function() {
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(151,187,205,1)",
-          data: [0,0,0,0,0,0,parseFloat(coin_init[i])]
+          data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,parseFloat(coin_init[i])]
         }]
       };
       runChart(chart_data[i], options, i);
@@ -47,7 +46,7 @@ $(document).ready(function() {
 
   setInterval(function() {
     tradingchart();
-  }, 60000);
+  }, 120000);
 
   $('#trading-config').change(function() {
      var index = parseInt($('#trading-config').val());
@@ -66,7 +65,7 @@ $(document).ready(function() {
 
   function cal_time(x) {
     var today = new Date();
-   cal_hour = new Date(today.valueOf() + (x *60000));
+   cal_hour = new Date(today.valueOf() + (x *120000));
    res_hour = cal_hour.getHours() + ":" + cal_hour.getMinutes() + ":" + cal_hour.getSeconds();
    return res_hour;
   }
@@ -82,29 +81,30 @@ $(document).ready(function() {
     }    
     labels.push(cal_time(k).toString());    
     labels.shift();
-    console.log(labels)
+    // console.log(labels)
     return labels;    
   }
 
   function setData(data,res) {
-    data.push(parseFloat(res));
+    data.push(res);
     data.shift();
     return data;
   }
-
+var cnt = 0;
   function tradingchart() {
     $.ajax({
       url:"/activity",
       success:function(res) {
-
+        console.log(res[2])
+        if (res[2] == true) {
           for (var j = 0; j < coin_init_length; j++) {
-            setData(chart_data[j].datasets[0].data,res[j]);
-            setLabels(chart_data[j].labels, j);
+            setData(chart_data[j].datasets[0].data,res[0][j]);
+            setData(chart_data[j].labels, res[1][j]);
             runChart(chart_data[j], options, j);
-          }   
-           
+          }
+        }      
+                  
       }
     });
-  }  
-
+  }
 });

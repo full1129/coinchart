@@ -45,6 +45,7 @@ Password = "ngocthuy1989"
 base_url = 'https://www.coinbase.com/signin'
 
 value_array = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
+cnt = 0
 driver.get(base_url)
 time.sleep(5)
 driver.implicitly_wait(5)
@@ -72,54 +73,73 @@ code_input.send_keys(phone_code)
 verify_button = driver.find_element_by_xpath('//input[@id="step_two_verify"]')
 driver.execute_script("arguments[0].click();", verify_button)
 
-def scrapy(url, i, flag):
+def scrapy(url, i):
 	global cnt
 	global value_array
-	time.sleep(3)
+	time.sleep(5)
 	now = datetime.now()
-	current_time = now.strftime("%H:%M:%S")
+	current_time = now.strftime("%Y-%m-%d %H:%M:%S")
 	driver.get('https://www.coinbase.com/price/'+url)
+	price_text = driver.find_element_by_xpath('//div[@class="Flex-l69ttv-0 AssetChartAmount__Wrapper-sc-1b4douf-0"]').text
+	print(price_text)
+	price_value = price_text.split('$')[1]
 	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
 
-	print(buy_text)
-	buy_value = buy_text.split("%")[0]
-	# buy_value = 10
+	# print(buy_text)
+	buy_value = [0, 0 ,False]
+	buy_value[0] = buy_text.split("%")[0]
+	# buy_value[0] = random.random()*10
+	buy_value[1] = current_time
+	
+	flag = False
 	file = open("data/"+url+".txt","a+")
-	if flag:
-		file.write(current_time + " --> " + str(buy_value) + "\n")
-		value_array[0][i] = buy_value
+	if cnt == 0:
+		file.write(current_time + " --> " + "Price" + price_value + "Buy: " + str(buy_value[0]) +"% " + "\n")
+		value_array[0][i] = buy_value[0]
 	else:
-		value_array[1][i] = buy_value
+		value_array[1][i] = buy_value[0]
 		if value_array[0][i] != value_array[1][i]:
-			file.write(current_time + " --> " + str(buy_value) + "\n")
-			value_array[0][i] = buy_value				
+			flag = True
+			buy_value[2] = flag
+			file.write(current_time + " --> " + "Price" + price_value + "Buy: " + str(buy_value[0]) + "%" + "\n")
+			value_array[0][i] = buy_value[0]
+		if i == 9:
+			cnt = 0
 	file.close()
 
-	return str(buy_value)
+	return buy_value
 
 
 
 coins = ["bitcoin" , "ethereum" ,"chainlink" , "litecoin" , "bitcoin-cash" , "uniswap" , "wrapped-bitcoin" , "aave" , "eos" , "tezos"]
 
-activity_data = []
+activity_data = [[],[],[False]]
 app = Flask(__name__)
 @app.route("/")
 def trading():
 	
-	global	value_array
-	flag = True
+
+	global cnt 
 
 	for i in range(len(coins)):	
-		activity_data.append(scrapy(coins[i],i, flag))
-	
-	return render_template('index.html',data = activity_data)
+		activity_data[0].append(scrapy(coins[i],i))
+	cnt +=1
+	return render_template('index.html',data = activity_data[0])
 
 @app.route("/activity")
 def trading_bitcoin():
-	activity_data = []
-	flag = False
-	for i in range(len(coins)):	
-		activity_data.append(scrapy(coins[i],i, flag))
+	global cnt
+	activity_data = [[],[],[False]]
+	resp = [[],[]]
+	for i in range(len(coins)):
+		resp = 	scrapy(coins[i],i)
+		# activity_data.append(resp)
+		activity_data[0].append(resp[0])
+		activity_data[1].append(resp[1])
+		activity_data[2] = (resp[2])
+	cnt +=1
+	
+	print(activity_data)
 	return jsonify(activity_data)
 
 
