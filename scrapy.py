@@ -28,63 +28,62 @@ from flask import flash    # I will learn after that will use
 
 import pdb
 
-# option = webdriver.ChromeOptions()
-# option.add_argument('headless')
-# today = date.today()
-# # now = datetime.now()
-# current_time = today.strftime("%m%d%y")
-# print(current_time)
+option = webdriver.ChromeOptions()
+option.add_argument('headless')
+today = date.today()
+# now = datetime.now()
+current_time = today.strftime("%m%d%y")
+print(current_time)
 
-# # file_name = input("Enter the excel file name: ")
-# # driver = webdriver.Chrome('chromedriver', options = option)
-# driver = selenium.webdriver.Chrome()
+# file_name = input("Enter the excel file name: ")
+# driver = webdriver.Chrome('chromedriver', options = option)
+driver = selenium.webdriver.Chrome()
 
-# Email = "tran200989@gmail.com"
-# Password = "ngocthuy1989"
+Email = "tran200989@gmail.com"
+Password = "ngocthuy1989"
 
-# base_url = 'https://www.coinbase.com/signin'
+base_url = 'https://www.coinbase.com/signin'
 
 value_array = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
-# driver.get(base_url)
-# time.sleep(5)
-# driver.implicitly_wait(5)
+driver.get(base_url)
+time.sleep(5)
+driver.implicitly_wait(5)
 
-# # pytesseract.pytesseract.tesseract_cmd = r'C:/Users/Secret Agent/AppData/Local/Tesseract-OCR/tesseract.exe'
+# pytesseract.pytesseract.tesseract_cmd = r'C:/Users/Secret Agent/AppData/Local/Tesseract-OCR/tesseract.exe'
 
-# print("----------start login---------------")
-# email_input = driver.find_element_by_id('email')
-# email_input.send_keys(Email)
-# password_input = driver.find_element_by_id('password')
-# password_input.send_keys(Password)
-# print("--------Please insert key manually--------------")
-# time.sleep(1)
-# submit_button=driver.find_element_by_xpath('//input[@type="submit"]')
-# driver.execute_script("arguments[0].click();", submit_button)
+print("----------start login---------------")
+email_input = driver.find_element_by_id('email')
+email_input.send_keys(Email)
+password_input = driver.find_element_by_id('password')
+password_input.send_keys(Password)
+print("--------Please insert key manually--------------")
+time.sleep(1)
+submit_button=driver.find_element_by_xpath('//input[@type="submit"]')
+driver.execute_script("arguments[0].click();", submit_button)
 
-# time.sleep(10)
+time.sleep(10)
 
-# phone_code = input("Enter the phone code: ")
-# time.sleep(10)
+phone_code = input("Enter the phone code: ")
+time.sleep(10)
 
-# code_input = driver.find_element_by_xpath('//input[@class="focus"]')
-# code_input.send_keys(phone_code)
+code_input = driver.find_element_by_xpath('//input[@class="focus"]')
+code_input.send_keys(phone_code)
 
-# verify_button = driver.find_element_by_xpath('//input[@id="step_two_verify"]')
-# driver.execute_script("arguments[0].click();", verify_button)
+verify_button = driver.find_element_by_xpath('//input[@id="step_two_verify"]')
+driver.execute_script("arguments[0].click();", verify_button)
 
 def scrapy(url, i, flag):
 	global cnt
-	# time.sleep(3)
+	global value_array
+	time.sleep(3)
 	now = datetime.now()
 	current_time = now.strftime("%H:%M:%S")
-	# driver.get('https://www.coinbase.com/price/'+url)
-	# buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
+	driver.get('https://www.coinbase.com/price/'+url)
+	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
 
-	# print(buy_text)
-	# buy_value = buy_text.split("%")[0]
-	global value_array
-
-	buy_value = 10
+	print(buy_text)
+	buy_value = buy_text.split("%")[0]
+	# buy_value = 10
 	file = open("data/"+url+".txt","a+")
 	if flag:
 		file.write(current_time + " --> " + str(buy_value) + "\n")
