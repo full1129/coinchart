@@ -27,6 +27,13 @@ from flask import url_for  # I will learn after that will use
 from flask import flash    # I will learn after that will use
 
 import pdb
+from coinbase.wallet.client import Client
+
+client = Client('tY0DCMM02iVm3TWm', 'aMYJePQJNm3eCY7nx8ClKu5cVNVAH4Tz', api_version='YYYY-MM-DD')
+currency_code = 'USD'  # can also use EUR, CAD, etc.
+
+
+
 
 option = webdriver.ChromeOptions()
 option.add_argument('headless')
@@ -80,9 +87,7 @@ def scrapy(url, i):
 	now = datetime.now()
 	current_time = now.strftime("%Y-%m-%d %H:%M:%S")
 	driver.get('https://www.coinbase.com/price/'+url)
-	price_text = driver.find_element_by_xpath('//div[@class="Flex-l69ttv-0 AssetChartAmount__Wrapper-sc-1b4douf-0"]').text
-	print(price_text)
-	price_value = price_text.split('$')[1]
+	price = client.get_spot_price(currency=currency_code)
 	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
 
 	# print(buy_text)
@@ -94,14 +99,14 @@ def scrapy(url, i):
 	flag = False
 	file = open("data/"+url+".txt","a+")
 	if cnt == 0:
-		file.write(current_time + " --> " + "Price" + price_value + "Buy: " + str(buy_value[0]) +"% " + "\n")
+		file.write(current_time + " --> " + "Price: " + price.amount + currency_code + " " + "Buy: " + str(buy_value[0]) +"% " + "\n")
 		value_array[0][i] = buy_value[0]
 	else:
 		value_array[1][i] = buy_value[0]
 		if value_array[0][i] != value_array[1][i]:
 			flag = True
 			buy_value[2] = flag
-			file.write(current_time + " --> " + "Price" + price_value + "Buy: " + str(buy_value[0]) + "%" + "\n")
+			file.write(current_time + " --> " + "Price: " + price.amount + currency_code + " " + "Buy: " + str(buy_value[0]) + "%" + "\n")
 			value_array[0][i] = buy_value[0]
 		if i == 9:
 			cnt = 0

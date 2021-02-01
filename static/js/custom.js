@@ -46,7 +46,7 @@ $(document).ready(function() {
 
   setInterval(function() {
     tradingchart();
-  }, 120000);
+  }, 180000);
 
   $('#trading-config').change(function() {
      var index = parseInt($('#trading-config').val());
@@ -65,7 +65,7 @@ $(document).ready(function() {
 
   function cal_time(x) {
     var today = new Date();
-   cal_hour = new Date(today.valueOf() + (x *120000));
+   cal_hour = new Date(today.valueOf() + (x *180000));
    res_hour = cal_hour.getHours() + ":" + cal_hour.getMinutes() + ":" + cal_hour.getSeconds();
    return res_hour;
   }
