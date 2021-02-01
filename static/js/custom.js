@@ -39,7 +39,7 @@ $(document).ready(function() {
       };
       runChart(chart_data[i], options, i);
     }
-   
+   console.log(coin_init)
   }
 
   init();

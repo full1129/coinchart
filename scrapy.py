@@ -37,10 +37,6 @@ currency_code = 'USD'  # can also use EUR, CAD, etc.
 
 option = webdriver.ChromeOptions()
 option.add_argument('headless')
-today = date.today()
-# now = datetime.now()
-current_time = today.strftime("%m%d%y")
-print(current_time)
 
 # file_name = input("Enter the excel file name: ")
 # driver = webdriver.Chrome('chromedriver', options = option)
@@ -85,7 +81,7 @@ def scrapy(url, i):
 	global value_array
 	time.sleep(5)
 	now = datetime.now()
-	current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+	current_time = now.strftime("%m-%d %H:%M")
 	driver.get('https://www.coinbase.com/price/'+url)
 	price = client.get_spot_price(currency=currency_code)
 	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
@@ -93,7 +89,7 @@ def scrapy(url, i):
 	# print(buy_text)
 	buy_value = [0, 0 ,False]
 	buy_value[0] = buy_text.split("%")[0]
-	# buy_value[0] = random.random()*10
+	buy_value[0] = random.random()*10
 	buy_value[1] = current_time
 	
 	flag = False
@@ -144,7 +140,7 @@ def trading_bitcoin():
 		activity_data[2] = (resp[2])
 	cnt +=1
 	
-	print(activity_data)
+
 	return jsonify(activity_data)
 
 
