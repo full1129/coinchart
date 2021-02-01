@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<title>Chart</title>
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div id="bitcoin" class="my-chart"></div>
+  <div id="ethorium" class="my-chart"></div>
+  <div id="litecoin" class="my-chart"></div>
+</body>
+<script type="text/javascript">
+	coins_chart = [];
+	var time_init = $('.time-init')[0].value;
+	var coin_init_length = $('.coin_init').length;
+	  for (var i = 0; i < coin_init_length; i++) {
+	    coins_chart.push(document.getElementsByClassName("activity-chart")[i].id);
+	  }
+	  var coin_init = [];
+	  var time_init = [];
+	  var chart_data = []; 
+
+	function init() {
+		for (var i = 0; i < coin_init_length; i++) {
+			coin_init.push($($('.coin_init')[i]).val());
+			var data = [{
+			  x: [time_init], 
+			  y: [coin_init[i]],
+			  mode: 'lines',
+			  line: {color: '#80CAF6'}
+			}] 
+			Plotly.plot(coins_chart[i], data);
+		}
+		 
+	}
+ 
+
+	var cnt = 0;
+
+	var interval = setInterval(function() {
+	  
+	  tradingchart();
+	}, 1000);
+
+	function tradingchart() {
+    $.ajax({
+      url:"/activity",
+      success:function(res) {
+
+        if (res[2] === true) {
+          	for (var j = 0; j < coin_init_length; j++) {
+	            var update = {
+				  x:  [[res[1][j]]],
+				  y: [[res[0][j]]]
+				}
+				Plotly.extendTraces(coins_chart[j], update, [0])
+		  
+		  		if(cnt === 100) clearInterval(interval);
+          	}
+        }      
+                  
+      }
+    });
+  }
+</script>
+</html>

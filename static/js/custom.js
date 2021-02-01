@@ -95,8 +95,7 @@ var cnt = 0;
     $.ajax({
       url:"/activity",
       success:function(res) {
-        console.log(res[2])
-        if (res[2] == true) {
+        if (res[2] === true) {
           for (var j = 0; j < coin_init_length; j++) {
             setData(chart_data[j].datasets[0].data,res[0][j]);
             setData(chart_data[j].labels, res[1][j]);

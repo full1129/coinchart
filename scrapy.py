@@ -29,11 +29,8 @@ from flask import flash    # I will learn after that will use
 import pdb
 from coinbase.wallet.client import Client
 
-client = Client('tY0DCMM02iVm3TWm', 'aMYJePQJNm3eCY7nx8ClKu5cVNVAH4Tz', api_version='YYYY-MM-DD')
+client = Client('tY0DCMM02iVm3TWm', 'aMYJePQJNm3eCY7nx8ClKu5cVNVAH4Tz')
 currency_code = 'USD'  # can also use EUR, CAD, etc.
-
-
-
 
 option = webdriver.ChromeOptions()
 option.add_argument('headless')
@@ -76,14 +73,14 @@ code_input.send_keys(phone_code)
 verify_button = driver.find_element_by_xpath('//input[@id="step_two_verify"]')
 driver.execute_script("arguments[0].click();", verify_button)
 
-def scrapy(url, i):
+def scrapy(url, pairs, i):
 	global cnt
 	global value_array
 	time.sleep(5)
 	now = datetime.now()
 	current_time = now.strftime("%m-%d %H:%M")
+	time.sleep(1)
 	driver.get('https://www.coinbase.com/price/'+url)
-	price = client.get_spot_price(currency=currency_code)
 	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
 
 	# print(buy_text)
@@ -91,7 +88,9 @@ def scrapy(url, i):
 	buy_value[0] = buy_text.split("%")[0]
 	# buy_value[0] = random.random()*10
 	buy_value[1] = current_time
-	
+
+	price = client.get_spot_price(currency_pair=pairs)
+	time.sleep(1)
 	flag = False
 	file = open("data/"+url+".txt","a+")
 	if cnt == 0:
@@ -110,7 +109,7 @@ def scrapy(url, i):
 
 	return buy_value
 
-
+pairs = ["BTC-USD" , "ETH-USD" ,"LINK-USD" , "LTC-USD" , "BCH-USD" , "UNI-USD" , "WBTC-USD" , "AAVE-USD" , "EOS-USD" , "XTZ-USD"]
 
 coins = ["bitcoin" , "ethereum" ,"chainlink" , "litecoin" , "bitcoin-cash" , "uniswap" , "wrapped-bitcoin" , "aave" , "eos" , "tezos"]
 
@@ -123,7 +122,7 @@ def trading():
 	global cnt 
 
 	for i in range(len(coins)):	
-		activity_data[0].append(scrapy(coins[i],i))
+		activity_data[0].append(scrapy(coins[i],pairs[i],i))
 	cnt +=1
 	return render_template('index.html',data = activity_data[0])
 
@@ -133,7 +132,7 @@ def trading_bitcoin():
 	activity_data = [[],[],[False]]
 	resp = [[],[]]
 	for i in range(len(coins)):
-		resp = 	scrapy(coins[i],i)
+		resp = 	scrapy(coins[i],pairs[i] ,i)
 		# activity_data.append(resp)
 		activity_data[0].append(resp[0])
 		activity_data[1].append(resp[1])
