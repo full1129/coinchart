@@ -89,7 +89,7 @@ def scrapy(url, i):
 	# print(buy_text)
 	buy_value = [0, 0 ,False]
 	buy_value[0] = buy_text.split("%")[0]
-	buy_value[0] = random.random()*10
+	# buy_value[0] = random.random()*10
 	buy_value[1] = current_time
 	
 	flag = False
