@@ -18,8 +18,8 @@ $(document).ready(function() {
     scaleStepWidth: 30,
     //Number - The scale starting value
     scaleStartValue: 0
-  }; 
-  function init(){    
+  };
+  function init(){
     
     for (var i = 0; i < coin_init_length; i++) {      
       coin_init.push($($('.coin_init')[i]).val());
@@ -46,7 +46,7 @@ $(document).ready(function() {
 
   setInterval(function() {
     tradingchart();
-  }, 180000);
+  }, 150000);
 
   $('#trading-config').change(function() {
      var index = parseInt($('#trading-config').val());

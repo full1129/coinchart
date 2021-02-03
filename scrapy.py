@@ -62,8 +62,6 @@ time.sleep(1)
 submit_button=driver.find_element_by_xpath('//input[@type="submit"]')
 driver.execute_script("arguments[0].click();", submit_button)
 
-time.sleep(10)
-
 phone_code = input("Enter the phone code: ")
 time.sleep(10)
 
@@ -79,7 +77,7 @@ def scrapy(url, pairs, i):
 	time.sleep(5)
 	now = datetime.now()
 	current_time = now.strftime("%m-%d %H:%M")
-	time.sleep(1)
+
 	driver.get('https://www.coinbase.com/price/'+url)
 	buy_text = driver.find_element_by_css_selector('div.PercentBarBuying__Text-pn1f5a-2').get_attribute('innerHTML')
 
@@ -117,8 +115,6 @@ activity_data = [[],[],[False]]
 app = Flask(__name__)
 @app.route("/")
 def trading():
-	
-
 	global cnt 
 
 	for i in range(len(coins)):	
@@ -137,8 +133,7 @@ def trading_bitcoin():
 		activity_data[0].append(resp[0])
 		activity_data[1].append(resp[1])
 		activity_data[2] = (resp[2])
-	cnt +=1
-	
+	cnt +=1	
 
 	return jsonify(activity_data)
 
