@@ -6,7 +6,12 @@ $(document).ready(function() {
   }
   var coin_init = [];
   var time_init = [];
-  var chart_data = []; 
+  var chart_data = [];
+
+  function getRandomInt(max) {
+    return Math.random() * Math.floor(max);
+  }
+
   var options = {
     animation: false,
     //Boolean - If we want to override with a hard coded scale
@@ -46,7 +51,7 @@ $(document).ready(function() {
 
   setInterval(function() {
     tradingchart();
-  }, 150000);
+  }, (getRandomInt(3)+1)*150000);
 
   $('#trading-config').change(function() {
      var index = parseInt($('#trading-config').val());

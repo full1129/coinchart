@@ -74,7 +74,7 @@ driver.execute_script("arguments[0].click();", verify_button)
 def scrapy(url, pairs, i):
 	global cnt
 	global value_array
-	time.sleep(5)
+	time.sleep(random.uniform(5, 10))
 	now = datetime.now()
 	current_time = now.strftime("%m-%d %H:%M")
 
